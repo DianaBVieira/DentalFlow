@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() { return request.auth != null; }
+
+    match /services/{serviceId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn(); // In real app, only admin can write
+    }
+    match /patients/{patientId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+    match /appointments/{appointmentId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+    match /settings/{settingId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+  }
+}

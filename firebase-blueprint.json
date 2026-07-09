@@ -1,0 +1,88 @@
+{
+  "entities": {
+    "Service": {
+      "title": "Service",
+      "description": "A service offered by the clinic.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "duration": { "type": "number" },
+        "buffer": { "type": "number" },
+        "price": { "type": "number" },
+        "description": { "type": "string" }
+      },
+      "required": ["id", "name", "duration", "price"]
+    },
+    "Patient": {
+      "title": "Patient",
+      "description": "A clinic patient.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "consentDate": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name", "phone"]
+    },
+    "Appointment": {
+      "title": "Appointment",
+      "description": "A clinic appointment.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "patientId": { "type": "string" },
+        "patientName": { "type": "string" },
+        "patientPhone": { "type": "string" },
+        "serviceId": { "type": "string" },
+        "serviceName": { "type": "string" },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "duration": { "type": "number" },
+        "buffer": { "type": "number" },
+        "status": { "type": "string" },
+        "source": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "price": { "type": "number" }
+      },
+      "required": ["id", "patientId", "serviceId", "date", "time"]
+    },
+    "Settings": {
+      "title": "Settings",
+      "description": "Clinic settings.",
+      "type": "object",
+      "properties": {
+        "clinicName": { "type": "string" },
+        "professionalName": { "type": "string" },
+        "startTime": { "type": "string" },
+        "endTime": { "type": "string" },
+        "daysOfWeek": { "type": "array" },
+        "address": { "type": "string" },
+        "googleMapsUrl": { "type": "string" },
+        "aiGreeting": { "type": "string" },
+        "aiSystemInstruction": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/services/{serviceId}": {
+      "schema": "Service",
+      "description": "Services offered by the clinic."
+    },
+    "/patients/{patientId}": {
+      "schema": "Patient",
+      "description": "Patients of the clinic."
+    },
+    "/appointments/{appointmentId}": {
+      "schema": "Appointment",
+      "description": "Appointments for the clinic."
+    },
+    "/settings/main": {
+      "schema": "Settings",
+      "description": "Clinic settings."
+    }
+  }
+}

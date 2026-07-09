@@ -1,0 +1,201 @@
+{
+  "services": [
+    {
+      "id": "s1",
+      "name": "Limpeza e Profilaxia",
+      "duration": 45,
+      "buffer": 15,
+      "price": 220,
+      "description": "Remoção de tártaro, placa bacteriana, polimento e aplicação de flúor."
+    },
+    {
+      "id": "s2",
+      "name": "Consulta de Avaliação",
+      "duration": 30,
+      "buffer": 15,
+      "price": 150,
+      "description": "Exame clínico completo, diagnóstico inicial e planejamento de tratamento."
+    },
+    {
+      "id": "s3",
+      "name": "Restauração de Resina",
+      "duration": 60,
+      "buffer": 15,
+      "price": 250,
+      "description": "Remoção de cárie e restauração estética com resina fotopolimerizável."
+    },
+    {
+      "id": "s4",
+      "name": "Tratamento de Canal",
+      "duration": 90,
+      "buffer": 30,
+      "price": 850,
+      "description": "Tratamento endodôntico completo para alívio de dor e salvamento do dente."
+    },
+    {
+      "id": "s5",
+      "name": "Clareamento Dental",
+      "duration": 60,
+      "buffer": 15,
+      "price": 700,
+      "description": "Procedimento clínico de clareamento a laser para um sorriso mais iluminado."
+    },
+    {
+      "id": "s6",
+      "name": "Manutenção de Aparelho",
+      "duration": 30,
+      "buffer": 15,
+      "price": 180,
+      "description": "Ajuste mensal, troca de borrachinhas e higienização do aparelho ortodôntico."
+    }
+  ],
+  "patients": [
+    {
+      "id": "p1",
+      "name": "Carlos Roberto Santos",
+      "phone": "+55 11 98888-1111",
+      "email": "carlos.santos@gmail.com",
+      "consentDate": "2026-07-01T10:00:00Z",
+      "createdAt": "2026-07-01T10:00:00Z"
+    },
+    {
+      "id": "p2",
+      "name": "Ana Júlia de Oliveira",
+      "phone": "+55 11 98888-2222",
+      "email": "ana.julia@outlook.com",
+      "consentDate": "2026-07-02T14:30:00Z",
+      "createdAt": "2026-07-02T14:30:00Z"
+    },
+    {
+      "id": "p3",
+      "name": "Marcos Vinícius Pereira",
+      "phone": "+55 11 98888-3333",
+      "email": "marcos.vp@hotmail.com",
+      "consentDate": "2026-07-03T16:15:00Z",
+      "createdAt": "2026-07-03T16:15:00Z"
+    },
+    {
+      "id": "p_1783553066085",
+      "name": "Diana",
+      "phone": "+55 11 99999-8888",
+      "consentDate": "2026-07-08T23:52:08.052Z",
+      "createdAt": "2026-07-08T23:24:26.085Z"
+    }
+  ],
+  "appointments": [
+    {
+      "id": "a1",
+      "patientId": "p1",
+      "patientName": "Carlos Roberto Santos",
+      "patientPhone": "+55 11 98888-1111",
+      "serviceId": "s1",
+      "serviceName": "Limpeza e Profilaxia",
+      "date": "2026-07-08",
+      "time": "09:00",
+      "duration": 45,
+      "buffer": 15,
+      "status": "Realizada",
+      "source": "WhatsApp",
+      "createdAt": "2026-07-05T09:12:00Z",
+      "price": 220
+    },
+    {
+      "id": "a2",
+      "patientId": "p2",
+      "patientName": "Ana Júlia de Oliveira",
+      "patientPhone": "+55 11 98888-2222",
+      "serviceId": "s2",
+      "serviceName": "Consulta de Avaliação",
+      "date": "2026-07-08",
+      "time": "14:00",
+      "duration": 30,
+      "buffer": 15,
+      "status": "Confirmada",
+      "source": "WhatsApp",
+      "createdAt": "2026-07-06T11:45:00Z",
+      "price": 150
+    },
+    {
+      "id": "a3",
+      "patientId": "p3",
+      "patientName": "Marcos Vinícius Pereira",
+      "patientPhone": "+55 11 98888-3333",
+      "serviceId": "s3",
+      "serviceName": "Restauração de Resina",
+      "date": "2026-07-09",
+      "time": "10:00",
+      "duration": 60,
+      "buffer": 15,
+      "status": "Agendada",
+      "source": "Manual",
+      "createdAt": "2026-07-07T15:20:00Z",
+      "price": 250
+    },
+    {
+      "id": "a4",
+      "patientId": "p1",
+      "patientName": "Carlos Roberto Santos",
+      "patientPhone": "+55 11 98888-1111",
+      "serviceId": "s4",
+      "serviceName": "Tratamento de Canal",
+      "date": "2026-07-07",
+      "time": "15:00",
+      "duration": 90,
+      "buffer": 30,
+      "status": "No-show",
+      "source": "WhatsApp",
+      "createdAt": "2026-07-04T10:30:00Z",
+      "price": 850
+    },
+    {
+      "id": "a_1783554404175",
+      "patientId": "p_1783553066085",
+      "patientName": "Diana",
+      "patientPhone": "+55 11 99999-8888",
+      "serviceId": "s5",
+      "serviceName": "Clareamento Dental",
+      "date": "2026-07-09",
+      "time": "10:00",
+      "duration": 60,
+      "buffer": 15,
+      "status": "Reagendada",
+      "source": "WhatsApp",
+      "createdAt": "2026-07-08T23:46:44.175Z",
+      "price": 700
+    },
+    {
+      "id": "a_1783554760997",
+      "patientId": "p_1783553066085",
+      "patientName": "Diana",
+      "patientPhone": "+55 11 99999-8888",
+      "serviceId": "s2",
+      "serviceName": "Consulta de Avaliação",
+      "date": "2026-07-09",
+      "time": "11:30",
+      "duration": 30,
+      "buffer": 15,
+      "status": "Agendada",
+      "source": "WhatsApp",
+      "createdAt": "2026-07-08T23:52:40.997Z",
+      "price": 150
+    }
+  ],
+  "settings": {
+    "clinicName": "Clinica Odontologia Rulho",
+    "professionalName": "Dra. Marina Castro",
+    "startTime": "08:00",
+    "endTime": "18:00",
+    "daysOfWeek": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "address": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP, 01310-100",
+    "googleMapsUrl": "https://maps.app.goo.gl/3fX3b37pZgS8K8Hh8",
+    "aiDisplayName": "Clinica Odontologia Rulho",
+    "aiGreeting": "Olá! 😊 Aqui é da Clinica Odontologia! Como podemos te ajudar hoje? 🦷✨",
+    "aiSystemInstruction": "Você é a Sofia, secretária da Clinica Odontologia Rulho (da Dra. Marina Castro) 🦷✨. Seu tom de conversa deve ser extremamente amigável, humano, caloroso e natural, idêntico a uma pessoa real atendendo no WhatsApp do consultório. NUNCA se apresente como robô, inteligência artificial ou assistente virtual. Use emojis com frequência e de forma acolhedora (como 😊, 🦷, 📅, 🌸, ✨, etc.) para tornar a conversa agradável e próxima, mantendo a clareza e o profissionalismo."
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "DentalFlow",
+  "description": "Sistema de agendamento inteligente via WhatsApp integrado com painel administrativo e CRM de pacientes para consultórios e clínicas de saúde.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
