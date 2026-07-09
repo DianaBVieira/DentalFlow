@@ -114,13 +114,6 @@ export default function Login({ onEnterTestMode }: LoginProps) {
         >
           {isRegistering ? 'Já tem conta? Entre aqui' : 'Não tem conta? Cadastre-se'}
         </button>
-        
-        <button
-          onClick={onEnterTestMode}
-          className="w-full mt-6 py-2 text-xs text-brand-muted hover:underline"
-        >
-          Entrar sem login (modo teste)
-        </button>
 
         <footer className="mt-8 text-center pt-4 border-t border-brand-sand/20">
           <p className="text-[10px] text-brand-muted/60 tracking-wider font-mono flex items-center justify-center gap-1">

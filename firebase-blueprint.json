@@ -65,6 +65,19 @@
         "aiGreeting": { "type": "string" },
         "aiSystemInstruction": { "type": "string" }
       }
+    },
+    "UserCalendarConfig": {
+      "title": "UserCalendarConfig",
+      "description": "User Google Calendar configuration.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "accessToken": { "type": "string" },
+        "refreshToken": { "type": "string" },
+        "calendarId": { "type": "string" },
+        "syncEnabled": { "type": "boolean" }
+      },
+      "required": ["userId"]
     }
   },
   "firestore": {
@@ -83,6 +96,10 @@
     "/settings/main": {
       "schema": "Settings",
       "description": "Clinic settings."
+    },
+    "/userCalendarConfigs/{userId}": {
+      "schema": "UserCalendarConfig",
+      "description": "User Google Calendar configuration."
     }
   }
 }

@@ -3,9 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
-import { Settings, Save, Clock, MapPin, Sparkles, AlertCircle, RefreshCw, Undo, MessageSquare, HelpCircle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Settings, Save, Clock, MapPin, Sparkles, AlertCircle, RefreshCw, Undo, MessageSquare, HelpCircle, Calendar } from 'lucide-react';
 import { ClinicSettings as SettingsType } from '../types';
+import { auth, db } from '../lib/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
 interface ClinicSettingsProps {
   settings: SettingsType;
@@ -25,6 +27,24 @@ export default function ClinicSettings({ settings, onSaveSettings }: ClinicSetti
   const [whatsappApiKey, setWhatsappApiKey] = useState(settings.whatsappApiKey || '');
   const [whatsappPhoneNumberId, setWhatsappPhoneNumberId] = useState(settings.whatsappPhoneNumberId || '');
   const [showHelp, setShowHelp] = useState(false);
+  const [calendarSyncEnabled, setCalendarSyncEnabled] = useState(false);
+
+  useEffect(() => {
+    const fetchCalendarConfig = async () => {
+      if (auth.currentUser) {
+        const docRef = doc(db, 'userCalendarConfigs', auth.currentUser.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setCalendarSyncEnabled(docSnap.data().syncEnabled);
+        }
+      }
+    };
+    fetchCalendarConfig();
+  }, []);
+
+  const connectCalendar = () => {
+    window.location.href = `/api/auth/google?userId=${auth.currentUser?.uid}`;
+  };
 
   const [saving, setSaving] = useState(false);
   const [savedMessage, setSavedMessage] = useState('');
@@ -182,6 +202,21 @@ export default function ClinicSettings({ settings, onSaveSettings }: ClinicSetti
               />
             </div>
             
+            {/* Google Calendar Sync */}
+            <h5 className="font-display font-semibold text-brand-dark text-sm border-b border-brand-light pb-3 mt-4 flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-brand-green" />
+              <span>Sincronização Google Agenda</span>
+            </h5>
+            <div className="flex flex-col gap-2 mt-2 mb-6">
+              <label className="flex items-center gap-2 text-sm text-brand-dark">
+                <input type="checkbox" checked={calendarSyncEnabled} onChange={(e) => setCalendarSyncEnabled(e.target.checked)} className="rounded border-brand-sand text-brand-green focus:ring-brand-green" />
+                Sincronizar consultas automaticamente
+              </label>
+              <div className="text-xs text-brand-muted ml-6">
+                Status mapeados: Confirmado, Cancelado, Reagendado.
+              </div>
+            </div>
+
             {/* WhatsApp Credentials */}
             <h5 className="font-display font-semibold text-brand-dark text-sm border-b border-brand-light pb-3 mt-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -192,6 +227,7 @@ export default function ClinicSettings({ settings, onSaveSettings }: ClinicSetti
                 <HelpCircle className="w-5 h-5" />
               </button>
             </h5>
+
             {showHelp && (
               <div className="bg-brand-light p-3 rounded-lg text-xs text-brand-dark mt-2 border border-brand-green/20">
                 <p className="font-semibold mb-1">Como obter as credenciais:</p>

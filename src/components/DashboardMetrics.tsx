@@ -68,6 +68,22 @@ export default function DashboardMetrics({ appointments, services }: DashboardMe
 
   return (
     <div className="flex flex-col gap-6">
+      {/* Integration Control */}
+      <div className="bg-white p-5 rounded-2xl border border-brand-green/30 shadow-sm flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <div className="p-3 bg-brand-green-light rounded-xl">
+             <Calendar className="w-6 h-6 text-brand-green" />
+          </div>
+          <div>
+            <h4 className="font-semibold text-brand-dark">Integração Google Agenda</h4>
+            <p className="text-xs text-brand-muted">Consultas sincronizadas automaticamente.</p>
+          </div>
+        </div>
+        <div className="px-4 py-2 bg-brand-green text-white text-xs font-semibold rounded-full">
+           Ativo
+        </div>
+      </div>
+
       {/* Top Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Appointments */}

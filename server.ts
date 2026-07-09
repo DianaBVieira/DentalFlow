@@ -10,11 +10,48 @@ import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI, Type } from '@google/genai';
 import dotenv from 'dotenv';
 import { Service, Patient, Appointment, ClinicSettings } from './src/types.js';
+import { syncAppointmentToCalendar } from './src/lib/calendar.js';
+import { google } from 'googleapis';
+import { db } from './src/lib/firebase.js';
+import { doc, setDoc } from 'firebase/firestore';
 
 dotenv.config();
 
+const oauth2Client = new google.auth.OAuth2(
+  process.env.GOOGLE_CLIENT_ID,
+  process.env.GOOGLE_CLIENT_SECRET,
+  process.env.GOOGLE_REDIRECT_URI
+);
+
 const app = express();
 app.use(express.json());
+
+app.get('/api/auth/google', (req, res) => {
+  const userId = req.query.userId;
+  const url = oauth2Client.generateAuthUrl({
+    access_type: 'offline',
+    scope: ['https://www.googleapis.com/auth/calendar.events'],
+    state: userId as string,
+  });
+  res.redirect(url);
+});
+
+app.get('/api/auth/google/callback', async (req, res) => {
+  const { code, state } = req.query;
+  try {
+    const { tokens } = await oauth2Client.getToken(code as string);
+    await setDoc(doc(db, 'userCalendarConfigs', state as string), {
+      userId: state as string,
+      accessToken: tokens.access_token,
+      refreshToken: tokens.refresh_token,
+      syncEnabled: true,
+    });
+    res.redirect('/settings');
+  } catch (error) {
+    console.error('Error in OAuth callback:', error);
+    res.status(500).send('Authentication failed');
+  }
+});
 
 const PORT = 3000;
 const DATA_FILE = path.join(process.cwd(), 'data-store.json');
@@ -859,7 +896,7 @@ function executeDatabaseAction(action: any, phone: string): boolean {
       );
 
       if (!isDuplicate) {
-        state.appointments.push({
+        const newAppt = {
           id: 'a_' + Date.now(),
           patientId: patient.id,
           patientName: patient.name,
@@ -874,8 +911,11 @@ function executeDatabaseAction(action: any, phone: string): boolean {
           source: 'WhatsApp',
           createdAt: new Date().toISOString(),
           price: service.price,
-        });
+        };
+        state.appointments.push(newAppt);
         updated = true;
+        // Trigger sync
+        syncAppointmentToCalendar(newAppt, 'default_dentist_id').catch(console.error);
       }
     }
   } else if (action.type === 'CANCEL') {
@@ -884,12 +924,16 @@ function executeDatabaseAction(action: any, phone: string): boolean {
     if (appt) {
       appt.status = 'Cancelada';
       updated = true;
+      // Trigger sync
+      syncAppointmentToCalendar(appt, 'default_dentist_id').catch(console.error);
     } else {
       // cancel any active appointment as a fallback
       const apptFallback = state.appointments.find(a => a.patientPhone === phone && (a.status === 'Agendada' || a.status === 'Confirmada'));
       if (apptFallback) {
         apptFallback.status = 'Cancelada';
         updated = true;
+        // Trigger sync
+        syncAppointmentToCalendar(apptFallback, 'default_dentist_id').catch(console.error);
       }
     }
   } else if (action.type === 'RESCHEDULE') {
@@ -901,6 +945,8 @@ function executeDatabaseAction(action: any, phone: string): boolean {
       appt.time = targetTime;
       appt.status = 'Reagendada';
       updated = true;
+      // Trigger sync
+      syncAppointmentToCalendar(appt, 'default_dentist_id').catch(console.error);
     }
   }
 
